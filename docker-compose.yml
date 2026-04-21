@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  api:
+    build: .
+    container_name: lms-risk-predictor-api
+    ports:
+      - "8000:8000"
+    environment:
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - ./lms_student_dataset.csv:/app/lms_student_dataset.csv
+      - ./lms_risk_model.pkl:/app/lms_risk_model.pkl
