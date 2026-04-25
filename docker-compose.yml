@@ -8,6 +8,17 @@ services:
       - "8000:8000"
     environment:
       - PYTHONUNBUFFERED=1
+      - API_TITLE=LMS Student Risk Prediction API
+      - API_VERSION=1.0.0
+      - LOG_LEVEL=INFO
+      - CORS_ORIGINS=http://localhost:3000,http://localhost:8000
     volumes:
       - ./lms_student_dataset.csv:/app/lms_student_dataset.csv
       - ./lms_risk_model.pkl:/app/lms_risk_model.pkl
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
